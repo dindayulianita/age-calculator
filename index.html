@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Age Calculator</title>
+</head>
+<body>
+
+    <main style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; font-family: sans-serif;">
+        <header>
+            <h1>Age Calculator</h1>
+        </header>
+
+        <section id="input-section">
+            <label for="birth-date">Masukkan Tanggal Lahir:</label><br><br>
+            <input type="date" id="birth-date" style="padding: 8px; width: 100%;">
+            <br><br>
+            <button onclick="calculateAge()" style="padding: 10px 20px; cursor: pointer;">Hitung Umur</button>
+        </section>
+
+        <hr>
+
+        <section id="result-section">
+            <h2>Hasil:</h2>
+            <p id="result">Pilih tanggal untuk melihat hasil.</p>
+        </section>
+    </main>
+
+    <script>
+        function calculateAge() {
+            const birthDateInput = document.getElementById('birth-date').value;
+            
+            if (!birthDateInput) {
+                alert("Harap masukkan tanggal lahir!");
+                return;
+            }
+
+            const birthDate = new Date(birthDateInput);
+            const today = new Date();
+
+            let years = today.getFullYear() - birthDate.getFullYear();
+            let months = today.getMonth() - birthDate.getMonth();
+            let days = today.getDate() - birthDate.getDate();
+
+            // Penyesuaian jika bulan/hari saat ini lebih kecil dari bulan/hari lahir
+            if (days < 0) {
+                months--;
+                // Ambil jumlah hari di bulan sebelumnya
+                const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+                days += lastMonth;
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const resultDisplay = document.getElementById('result');
+            resultDisplay.innerHTML = `Umur Anda saat ini: <strong>${years} Tahun, ${months} Bulan, dan ${days} Hari</strong>.`;
+        }
+    </script>
+
+</body>
+</html>
